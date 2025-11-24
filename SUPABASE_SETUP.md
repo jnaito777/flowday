@@ -85,3 +85,4 @@ Once set up, your FlowDay app will:
 - ✅ Use secure authentication
 - ✅ Real-time updates (if multiple tabs are open)
 
+
