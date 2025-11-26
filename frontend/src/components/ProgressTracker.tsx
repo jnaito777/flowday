@@ -20,18 +20,18 @@ export const ProgressTracker = ({
   return (
     <Card className="p-6 bg-gradient-to-br from-card to-secondary/30 border-primary/20">
       <div className="flex items-center gap-2 mb-4">
-        <Trophy className="h-5 w-5 text-accent" />
-        <h2 className="text-lg font-bold text-card-foreground">Today's Progress</h2>
+        <Trophy className="h-5 w-5 text-black" />
+        <h2 className="text-lg font-bold text-black">Today's Progress</h2>
       </div>
 
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground flex items-center gap-2">
-              <Target className="h-4 w-4" />
+            <span className="text-black flex items-center gap-2">
+              <Target className="h-4 w-4 text-black" />
               Tasks Completed
             </span>
-            <span className="font-semibold text-card-foreground">
+            <span className="font-semibold text-black">
               {completedTasks} / {totalTasks}
             </span>
           </div>
@@ -41,16 +41,16 @@ export const ProgressTracker = ({
               style={{ width: `${completionRate}%` }}
             />
           </div>
-          <p className="text-xs text-right text-muted-foreground">{completionRate}% complete</p>
+          <p className="text-xs text-right text-black">{completionRate}% complete</p>
         </div>
 
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground flex items-center gap-2">
-              <TrendingUp className="h-4 w-4" />
+            <span className="text-black flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-black" />
               Time Investment
             </span>
-            <span className="font-semibold text-card-foreground">
+            <span className="font-semibold text-black">
               {totalTimeSpent} / {totalTimeScheduled} min
             </span>
           </div>
@@ -60,7 +60,7 @@ export const ProgressTracker = ({
               style={{ width: `${Math.min(timeProgress, 100)}%` }}
             />
           </div>
-          <p className="text-xs text-right text-muted-foreground">{timeProgress}% of scheduled time</p>
+          <p className="text-xs text-right text-black">{timeProgress}% of scheduled time</p>
         </div>
       </div>
     </Card>

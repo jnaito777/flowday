@@ -22,6 +22,8 @@ export interface DaySummary {
   totalEstimatedMinutes: number;
   actualMinutes: number;
   tasks: Task[];
+  incompleteTasks?: Task[];
 }
+
 
 

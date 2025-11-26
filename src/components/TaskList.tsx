@@ -1,4 +1,4 @@
-import { Task } from '../types';
+import type { Task } from '../types';
 import './TaskList.css';
 
 interface TaskListProps {
@@ -112,5 +112,6 @@ function TaskItem({
     </div>
   );
 }
+
 
 

@@ -34,20 +34,20 @@ export const ScheduleView = ({ tasks }: ScheduleViewProps) => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Calendar className="h-5 w-5 text-primary" />
-            <h2 className="text-lg font-bold text-card-foreground">Today's Schedule</h2>
+            <Calendar className="h-5 w-5 text-black" />
+            <h2 className="text-lg font-bold text-black">Today's Schedule</h2>
           </div>
-          <p className="text-sm text-muted-foreground">{formatDate()}</p>
+          <p className="text-sm text-black">{formatDate()}</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
-          <Clock className="h-4 w-4 text-primary" />
-          <span className="font-mono font-semibold text-primary">{getCurrentTime()}</span>
+          <Clock className="h-4 w-4 text-black" />
+          <span className="font-mono font-semibold text-black">{getCurrentTime()}</span>
         </div>
       </div>
 
       <div className="space-y-3">
         {tasks.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-black">
             <p>No tasks scheduled yet. Add your first task to get started!</p>
           </div>
         ) : (
@@ -57,7 +57,7 @@ export const ScheduleView = ({ tasks }: ScheduleViewProps) => {
               className={cn(
                 "flex items-center gap-3 p-3 rounded-lg border transition-smooth",
                 task.completed 
-                  ? "bg-success/5 border-success/20" 
+                  ? "bg-gray-100 border-gray-300" 
                   : task.isPaused
                   ? "bg-muted/50 border-border"
                   : "bg-card border-primary/20 hover:shadow-soft"
@@ -66,7 +66,7 @@ export const ScheduleView = ({ tasks }: ScheduleViewProps) => {
               <div className={cn(
                 "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm",
                 task.completed
-                  ? "bg-success text-success-foreground"
+                  ? "bg-gray-300 text-gray-600"
                   : "bg-primary/10 text-primary"
               )}>
                 {index + 1}
@@ -75,11 +75,16 @@ export const ScheduleView = ({ tasks }: ScheduleViewProps) => {
               <div className="flex-1">
                 <h4 className={cn(
                   "font-medium",
-                  task.completed && "line-through text-muted-foreground"
+                  task.completed 
+                    ? "line-through text-gray-500" 
+                    : "text-black"
                 )}>
                   {task.title}
                 </h4>
-                <p className="text-xs text-muted-foreground">
+                <p className={cn(
+                  "text-xs",
+                  task.completed ? "text-gray-500" : "text-black"
+                )}>
                   {task.duration} minutes
                   {task.isPaused && " • Paused"}
                 </p>
@@ -89,7 +94,7 @@ export const ScheduleView = ({ tasks }: ScheduleViewProps) => {
                 <div className={cn(
                   "text-xs font-medium px-2 py-1 rounded",
                   task.completed
-                    ? "bg-success/20 text-success"
+                    ? "bg-gray-300 text-gray-600"
                     : task.isPaused
                     ? "bg-muted text-muted-foreground"
                     : "bg-primary/10 text-primary"

@@ -5,6 +5,7 @@ import TaskInput from './components/TaskInput';
 import TaskList from './components/TaskList';
 import ScheduleBuilder from './components/ScheduleBuilder';
 import DaySummary from './components/DaySummary';
+import UsageStats from './components/UsageStats';
 import Auth from './components/Auth';
 import './App.css';
 
@@ -14,7 +15,6 @@ function App() {
     tasks,
     loading: tasksLoading,
     addTask,
-    updateTask,
     deleteTask,
     completeTask,
     scheduleTask,
@@ -27,16 +27,6 @@ function App() {
 
   const handleScheduleTask = (taskId: string, start: Date, end: Date) => {
     scheduleTask(taskId, start, end);
-  };
-
-  const handleMoveTask = (taskId: string, newStart: Date) => {
-    const task = tasks.find((t) => t.id === taskId);
-    if (task) {
-      const newEnd = new Date(
-        newStart.getTime() + task.estimatedMinutes * 60 * 1000
-      );
-      scheduleTask(taskId, newStart, newEnd);
-    }
   };
 
   if (loading) {
@@ -112,11 +102,12 @@ function App() {
                   tasks={tasks}
                   onScheduleTask={handleScheduleTask}
                   onUnscheduleTask={unscheduleTask}
-                  onMoveTask={handleMoveTask}
+                  
                 />
               )}
 
               {activeTab === 'summary' && <DaySummary tasks={tasks} />}
+              {activeTab === 'summary' && <UsageStats />}
             </>
           )}
         </div>

@@ -25,14 +25,16 @@ export const TaskCard = ({ task, onComplete, onTogglePause }: TaskCardProps) => 
   return (
     <Card className={cn(
       "p-4 transition-smooth hover:shadow-soft",
-      task.completed && "opacity-60"
+      task.completed && "bg-gray-100 opacity-75"
     )}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 space-y-2">
           <div className="flex items-center gap-2">
             <h3 className={cn(
-              "font-semibold text-card-foreground",
-              task.completed && "line-through text-muted-foreground"
+              "font-semibold",
+              task.completed 
+                ? "line-through text-gray-500" 
+                : "text-black"
             )}>
               {task.title}
             </h3>
@@ -43,8 +45,14 @@ export const TaskCard = ({ task, onComplete, onTogglePause }: TaskCardProps) => 
             )}
           </div>
           
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Clock className="h-4 w-4" />
+          <div className={cn(
+            "flex items-center gap-2 text-sm",
+            task.completed ? "text-gray-500" : "text-black"
+          )}>
+            <Clock className={cn(
+              "h-4 w-4",
+              task.completed ? "text-gray-500" : "text-black"
+            )} />
             <span>{task.timeSpent} / {task.duration} min</span>
           </div>
 
@@ -67,9 +75,9 @@ export const TaskCard = ({ task, onComplete, onTogglePause }: TaskCardProps) => 
               className="h-9 w-9"
             >
               {task.isPaused ? (
-                <Play className="h-4 w-4" />
+                <Play className="h-4 w-4 text-black" />
               ) : (
-                <Pause className="h-4 w-4" />
+                <Pause className="h-4 w-4 text-black" />
               )}
             </Button>
           )}
@@ -80,10 +88,13 @@ export const TaskCard = ({ task, onComplete, onTogglePause }: TaskCardProps) => 
             onClick={() => onComplete(task.id)}
             className={cn(
               "h-9 w-9",
-              task.completed && "bg-success hover:bg-success/90"
+              task.completed && "bg-gray-300 hover:bg-gray-400"
             )}
           >
-            <Check className="h-4 w-4" />
+            <Check className={cn(
+              "h-4 w-4",
+              task.completed ? "text-gray-600" : "text-white"
+            )} />
           </Button>
         </div>
       </div>

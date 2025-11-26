@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Task, DaySummary as DaySummaryType } from '../types';
+import type { Task, DaySummary as DaySummaryType } from '../types';
 import { format, isToday, startOfDay } from 'date-fns';
 import './DaySummary.css';
 
@@ -14,6 +14,17 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
       if (!task.completedAt) return false;
       const taskDate = startOfDay(new Date(task.completedAt));
       return taskDate.getTime() === today.getTime();
+    });
+
+    const todayIncompleteTasks = tasks.filter((task) => {
+      if (task.completed) return false;
+      // Consider task part of today if scheduledStart is today or created today
+      if (task.scheduledStart) {
+        const s = startOfDay(new Date(task.scheduledStart));
+        if (s.getTime() === today.getTime()) return true;
+      }
+      // If not scheduled, include unscheduled tasks as part of today's actionable tasks
+      return true;
     });
 
     const completedTasks = todayTasks.filter((t) => t.completed);
@@ -40,6 +51,7 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
       totalEstimatedMinutes: totalEstimated,
       actualMinutes: Math.round(actualMinutes),
       tasks: completedTasks,
+      incompleteTasks: todayIncompleteTasks,
     } as DaySummaryType;
   }, [tasks]);
 
@@ -69,6 +81,19 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
         <div className="summary-empty">
           <p>Complete some tasks to see your summary!</p>
         </div>
+
+        {summary.incompleteTasks && summary.incompleteTasks.length > 0 && (
+          <div className="incomplete-alert">
+            <h3>Incomplete Tasks (Today)</h3>
+            <ul>
+              {summary.incompleteTasks.map((t) => (
+                <li key={t.id} className="incomplete-item">
+                  {t.title} — {t.estimatedMinutes} min
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     );
   }
@@ -141,8 +166,23 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
           ))}
         </div>
       </div>
+
+      {summary.incompleteTasks && summary.incompleteTasks.length > 0 && (
+        <div className="incomplete-section">
+          <h3 style={{ color: '#b91c1c' }}>Incomplete Tasks (Today)</h3>
+          <div className="tasks-grid">
+            {summary.incompleteTasks.map((t) => (
+              <div key={t.id} className="incomplete-task-item">
+                <div className="incomplete-task-title">{t.title}</div>
+                <div className="incomplete-task-meta">{t.estimatedMinutes} min</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 
 

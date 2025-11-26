@@ -3,7 +3,6 @@ import { TaskCard } from "@/components/TaskCard";
 import { ProgressTracker } from "@/components/ProgressTracker";
 import { AddTaskDialog } from "@/components/AddTaskDialog";
 import { ScheduleView } from "@/components/ScheduleView";
-import { Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 interface Task {
@@ -83,12 +82,8 @@ const Index = () => {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <header className="text-center space-y-4 py-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary">
-            <Sparkles className="h-4 w-4" />
-            <span className="text-sm font-medium">Flexible & Accountable</span>
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            FlexFlow
+            Flowday
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             A productivity app that adapts to real life. Schedule your work, handle interruptions gracefully, 

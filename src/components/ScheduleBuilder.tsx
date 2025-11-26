@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Task } from '../types';
+import type { Task } from '../types';
 import { format, addMinutes, setHours, setMinutes, startOfDay } from 'date-fns';
 import './ScheduleBuilder.css';
 
@@ -7,7 +7,6 @@ interface ScheduleBuilderProps {
   tasks: Task[];
   onScheduleTask: (taskId: string, start: Date, end: Date) => void;
   onUnscheduleTask: (taskId: string) => void;
-  onMoveTask: (taskId: string, newStart: Date) => void;
 }
 
 const WORK_START_HOUR = 9;
@@ -18,7 +17,6 @@ export default function ScheduleBuilder({
   tasks,
   onScheduleTask,
   onUnscheduleTask,
-  onMoveTask,
 }: ScheduleBuilderProps) {
   const today = useMemo(() => startOfDay(new Date()), []);
   const hours = useMemo(() => {
@@ -101,7 +99,6 @@ export default function ScheduleBuilder({
                       key={task.id}
                       task={task}
                       position={pos}
-                      onMove={onMoveTask}
                       onUnschedule={onUnscheduleTask}
                     />
                   );
@@ -130,12 +127,10 @@ export default function ScheduleBuilder({
 function TaskBlock({
   task,
   position,
-  onMove,
   onUnschedule,
 }: {
   task: Task;
   position: { top: number; height: number };
-  onMove: (taskId: string, newStart: Date) => void;
   onUnschedule: (taskId: string) => void;
 }) {
   const handleDragStart = (e: React.DragEvent) => {
@@ -195,5 +190,6 @@ function DraggableTask({ task }: { task: Task }) {
     </div>
   );
 }
+
 
 

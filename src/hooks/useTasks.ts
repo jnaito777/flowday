@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Task } from '../types';
+import type { Task } from '../types';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -167,9 +167,26 @@ export function useTasks() {
 
   const completeTask = useCallback(
     async (id: string) => {
-      await updateTask(id, { completed: true, completedAt: new Date() });
+      if (!user) return;
+
+      try {
+        await updateTask(id, { completed: true, completedAt: new Date() });
+
+        // Record an analytic event for completion
+        const { error: eventError } = await supabase.from('task_events').insert({
+          user_id: user.id,
+          task_id: id,
+          event_type: 'completed',
+          event_at: new Date().toISOString(),
+        });
+
+        if (eventError) console.warn('Error recording task event:', eventError);
+      } catch (err) {
+        console.error('Error completing task:', err);
+        throw err;
+      }
     },
-    [updateTask]
+    [updateTask, user]
   );
 
   const scheduleTask = useCallback(
