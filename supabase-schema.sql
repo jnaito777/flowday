@@ -15,6 +15,12 @@ CREATE TABLE IF NOT EXISTS tasks (
 -- Enable Row Level Security
 ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist (safe for re-runs)
+DROP POLICY IF EXISTS "Users can view their own tasks" ON tasks;
+DROP POLICY IF EXISTS "Users can insert their own tasks" ON tasks;
+DROP POLICY IF EXISTS "Users can update their own tasks" ON tasks;
+DROP POLICY IF EXISTS "Users can delete their own tasks" ON tasks;
+
 -- Create policy: Users can only see their own tasks
 CREATE POLICY "Users can view their own tasks"
   ON tasks FOR SELECT
@@ -48,7 +54,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create trigger to automatically update updated_at
+-- Create trigger to automatically update updated_at (drop if exists first)
+DROP TRIGGER IF EXISTS update_tasks_updated_at ON tasks;
 CREATE TRIGGER update_tasks_updated_at
   BEFORE UPDATE ON tasks
   FOR EACH ROW
@@ -66,6 +73,10 @@ CREATE TABLE IF NOT EXISTS task_events (
 );
 
 ALTER TABLE task_events ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist (safe for re-runs)
+DROP POLICY IF EXISTS "Users can insert their own task events" ON task_events;
+DROP POLICY IF EXISTS "Users can view their own task events" ON task_events;
 
 CREATE POLICY "Users can insert their own task events"
   ON task_events FOR INSERT
