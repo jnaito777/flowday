@@ -1,0 +1,201 @@
+.schedule-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.schedule-container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+}
+
+.schedule-timeline {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-timeline h2 {
+  margin: 0 0 1.5rem;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+}
+
+.time-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.time-block {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border: 2px dashed #e5e7eb;
+  border-radius: 0.5rem;
+  min-height: 80px;
+  transition: all 0.3s;
+  cursor: grab;
+}
+
+.time-block:hover {
+  background: #f3f4f6;
+  border-color: #667eea;
+}
+
+.time-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  align-self: center;
+}
+
+.task-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.9rem;
+  min-height: 60px;
+}
+
+.scheduled-task {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.scheduled-task strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.task-duration {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.unscheduled-panel {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.unscheduled-panel h3 {
+  margin: 0 0 1rem;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.unscheduled-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.draggable-task {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 2px solid #667eea;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  cursor: grab;
+  transition: all 0.3s;
+  user-select: none;
+}
+
+.draggable-task:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+  transform: scale(1.02);
+}
+
+.draggable-task:active {
+  cursor: grabbing;
+  opacity: 0.8;
+}
+
+.task-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+  word-wrap: break-word;
+}
+
+.task-time {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.empty-state {
+  text-align: center;
+  color: #999;
+  padding: 2rem 1rem;
+}
+
+.schedule-info {
+  background: #f0f9ff;
+  border: 1px solid #667eea;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.schedule-info h3 {
+  margin: 0 0 1rem;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.schedule-info ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style-position: outside;
+}
+
+.schedule-info li {
+  color: #666;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .schedule-container {
+    grid-template-columns: 1fr;
+  }
+
+  .time-grid {
+    max-height: 400px;
+  }
+
+  .time-block {
+    grid-template-columns: 60px 1fr;
+    min-height: 70px;
+    gap: 0.75rem;
+  }
+
+  .time-label {
+    font-size: 0.8rem;
+  }
+
+  .schedule-timeline {
+    padding: 1.5rem;
+  }
+
+  .unscheduled-panel {
+    padding: 1rem;
+  }
+}
