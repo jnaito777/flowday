@@ -1,4 +1,4 @@
-import { Task, UserProfile } from '../types';
+import type { Task, UserProfile } from '../types';
 
 const TASKS_KEY = 'taskflow_tasks';
 const PROFILE_KEY = 'taskflow_profile';
