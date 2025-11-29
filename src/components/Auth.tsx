@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import './Auth.css';
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MIN_PASSWORD_LENGTH = 6;
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -10,9 +13,26 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useAuth();
 
+  const validateForm = useCallback((): string | null => {
+    if (!email.trim()) return 'Email is required';
+    if (!EMAIL_REGEX.test(email)) return 'Please enter a valid email';
+    if (!password) return 'Password is required';
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      return `Password must be at least ${MIN_PASSWORD_LENGTH} characters`;
+    }
+    return null;
+  }, [email, password]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -29,6 +49,11 @@ export default function Auth() {
       setLoading(false);
     }
   };
+
+  const handleModeToggle = useCallback(() => {
+    setIsSignUp((prev) => !prev);
+    setError(null);
+  }, []);
 
   return (
     <div className="auth-container">
@@ -49,6 +74,8 @@ export default function Auth() {
               required
               placeholder="you@example.com"
               className="form-input"
+              disabled={loading}
+              aria-label="Email address"
             />
           </div>
 
@@ -60,9 +87,11 @@ export default function Auth() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={6}
+              minLength={MIN_PASSWORD_LENGTH}
               placeholder="••••••••"
               className="form-input"
+              disabled={loading}
+              aria-label="Password"
             />
           </div>
 
@@ -72,6 +101,7 @@ export default function Auth() {
             type="submit"
             disabled={loading}
             className="auth-button"
+            aria-busy={loading}
           >
             {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
           </button>
@@ -82,11 +112,9 @@ export default function Auth() {
             {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
             <button
               type="button"
-              onClick={() => {
-                setIsSignUp(!isSignUp);
-                setError(null);
-              }}
+              onClick={handleModeToggle}
               className="switch-link"
+              disabled={loading}
             >
               {isSignUp ? 'Sign In' : 'Sign Up'}
             </button>
