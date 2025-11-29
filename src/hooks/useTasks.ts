@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { Task } from '../types';
+import type { Task, DBTask } from '../types';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -54,10 +54,10 @@ export function useTasks() {
       if (error) throw error;
 
       // Convert database format to Task format
-      const formattedTasks: Task[] = (data || []).map((task: any) => ({
+      const formattedTasks: Task[] = (data || []).map((task: DBTask) => ({
         id: task.id,
         title: task.title,
-        estimatedMinutes: task.estimated_minutes,
+        estimatedMinutes: task.estimated_minutes ?? 0,
         scheduledStart: task.scheduled_start ? new Date(task.scheduled_start) : undefined,
         scheduledEnd: task.scheduled_end ? new Date(task.scheduled_end) : undefined,
         completed: task.completed,
@@ -91,9 +91,9 @@ export function useTasks() {
         if (error) throw error;
 
         const newTask: Task = {
-          id: data.id,
-          title: data.title,
-          estimatedMinutes: data.estimated_minutes,
+          id: (data as DBTask).id,
+          title: (data as DBTask).title,
+          estimatedMinutes: (data as DBTask).estimated_minutes ?? 0,
           completed: false,
         };
 
@@ -112,7 +112,7 @@ export function useTasks() {
       if (!user) return;
 
       try {
-        const dbUpdates: any = {};
+        const dbUpdates: Record<string, unknown> = {};
         if (updates.title !== undefined) dbUpdates.title = updates.title;
         if (updates.estimatedMinutes !== undefined)
           dbUpdates.estimated_minutes = updates.estimatedMinutes;

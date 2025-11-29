@@ -8,6 +8,20 @@ export interface Task {
   completedAt?: Date;
 }
 
+// Database representation of a task row from Supabase
+export interface DBTask {
+  id: string;
+  user_id: string;
+  title: string;
+  estimated_minutes: number | null;
+  scheduled_start: string | null;
+  scheduled_end: string | null;
+  completed: boolean;
+  completed_at: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
 export interface TimeBlock {
   id: string;
   taskId: string;

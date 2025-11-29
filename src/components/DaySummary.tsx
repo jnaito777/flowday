@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import type { Task, DaySummary as DaySummaryType } from '../types';
 import { format, isToday, startOfDay } from 'date-fns';
+import { StatCard } from './StatCard';
+import { TaskItemCard } from './TaskItemCard';
 import './DaySummary.css';
 
 interface DaySummaryProps {
@@ -110,22 +112,22 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
       </div>
 
       <div className="summary-stats">
-        <div className="stat-card">
-          <div className="stat-value">{summary.completedTasks}</div>
-          <div className="stat-label">Tasks Completed</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">{completionRate}%</div>
-          <div className="stat-label">Completion Rate</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">{summary.totalEstimatedMinutes}</div>
-          <div className="stat-label">Estimated Minutes</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">{summary.actualMinutes}</div>
-          <div className="stat-label">Actual Minutes</div>
-        </div>
+        <StatCard
+          title="Tasks Completed"
+          value={summary.completedTasks}
+        />
+        <StatCard
+          title="Completion Rate"
+          value={`${completionRate}%`}
+        />
+        <StatCard
+          title="Estimated Minutes"
+          value={summary.totalEstimatedMinutes}
+        />
+        <StatCard
+          title="Actual Minutes"
+          value={summary.actualMinutes}
+        />
       </div>
 
       <div className="summary-insights">
@@ -155,14 +157,7 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
         <h3>Completed Tasks</h3>
         <div className="tasks-grid">
           {summary.tasks.map((task) => (
-            <div key={task.id} className="completed-task-item">
-              <div className="completed-task-title">✓ {task.title}</div>
-              <div className="completed-task-meta">
-                {task.estimatedMinutes} min •{' '}
-                {task.completedAt &&
-                  format(new Date(task.completedAt), 'h:mm a')}
-              </div>
-            </div>
+            <TaskItemCard key={task.id} task={task} isCompleted showTime />
           ))}
         </div>
       </div>
@@ -172,10 +167,7 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
           <h3 style={{ color: '#b91c1c' }}>Incomplete Tasks (Today)</h3>
           <div className="tasks-grid">
             {summary.incompleteTasks.map((t) => (
-              <div key={t.id} className="incomplete-task-item">
-                <div className="incomplete-task-title">{t.title}</div>
-                <div className="incomplete-task-meta">{t.estimatedMinutes} min</div>
-              </div>
+              <TaskItemCard key={t.id} task={t} isCompleted={false} />
             ))}
           </div>
         </div>

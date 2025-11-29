@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import type { DBTask } from '../types';
 
 function inRange(dateStr: string | null | undefined, from?: Date, to?: Date) {
   if (!dateStr || !from || !to) return false;
@@ -31,10 +32,10 @@ export function useUserStats() {
         return null;
       }
 
-      const tasks = data || [];
+      const tasks: DBTask[] = (data as DBTask[]) || [];
 
       // Total: tasks that were created or scheduled in the range
-      const total = tasks.filter((t: any) => {
+      const total = tasks.filter((t) => {
         return (
           inRange(t.created_at, from, to) ||
           inRange(t.scheduled_start, from, to)
@@ -42,7 +43,7 @@ export function useUserStats() {
       }).length;
 
       // Completed: tasks with completed_at in the range
-      const completed = tasks.filter((t: any) => {
+      const completed = tasks.filter((t) => {
         return t.completed && inRange(t.completed_at, from, to);
       }).length;
 

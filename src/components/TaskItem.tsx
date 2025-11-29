@@ -1,0 +1,41 @@
+import type { Task } from '../types';
+
+interface TaskItemProps {
+  task: Task;
+  onComplete: (id: string) => void;
+  onDelete: (id: string) => void;
+}
+
+export function TaskItem({ task, onComplete, onDelete }: TaskItemProps) {
+  return (
+    <div className={`task-item ${task.completed ? 'completed' : ''}`}>
+      <div className="task-content">
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => onComplete(task.id)}
+          className="task-checkbox"
+        />
+        <div className="task-info">
+          <span className="task-title">{task.title}</span>
+          <span className="task-time">{task.estimatedMinutes} min</span>
+        </div>
+      </div>
+      {task.scheduledStart && (
+        <div className="task-scheduled">
+          {new Date(task.scheduledStart).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </div>
+      )}
+      <button
+        onClick={() => onDelete(task.id)}
+        className="delete-btn"
+        aria-label="Delete task"
+      >
+        ×
+      </button>
+    </div>
+  );
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useUserStats } from '../hooks/useUserStats';
+import { StatCard } from './StatCard';
 import './UsageStats.css';
 
 export default function UsageStats() {
@@ -49,59 +50,26 @@ export default function UsageStats() {
     <div className="usage-stats">
       <h2>Usage Statistics</h2>
       <div className="stats-container">
-        <div className="stat-card">
-          <div className="stat-title">Today</div>
-          <div className="stat-content">
-            <div className="stat-number">
-              {stats.daily.completed}/{stats.daily.total}
-            </div>
-            <div className="stat-rate">
-              {stats.daily.rate.toFixed(0)}% Complete
-            </div>
-          </div>
-          <div className="stat-bar">
-            <div
-              className="stat-bar-fill"
-              style={{ width: `${stats.daily.rate}%` }}
-            ></div>
-          </div>
-        </div>
+        <StatCard
+          title="Today"
+          value={`${stats.daily.completed}/${stats.daily.total}`}
+          subtitle={`${stats.daily.rate.toFixed(0)}% Complete`}
+          progressBar={stats.daily.rate}
+        />
 
-        <div className="stat-card">
-          <div className="stat-title">This Month</div>
-          <div className="stat-content">
-            <div className="stat-number">
-              {stats.monthly.completed}/{stats.monthly.total}
-            </div>
-            <div className="stat-rate">
-              {stats.monthly.rate.toFixed(0)}% Complete
-            </div>
-          </div>
-          <div className="stat-bar">
-            <div
-              className="stat-bar-fill"
-              style={{ width: `${stats.monthly.rate}%` }}
-            ></div>
-          </div>
-        </div>
+        <StatCard
+          title="This Month"
+          value={`${stats.monthly.completed}/${stats.monthly.total}`}
+          subtitle={`${stats.monthly.rate.toFixed(0)}% Complete`}
+          progressBar={stats.monthly.rate}
+        />
 
-        <div className="stat-card">
-          <div className="stat-title">This Year</div>
-          <div className="stat-content">
-            <div className="stat-number">
-              {stats.yearly.completed}/{stats.yearly.total}
-            </div>
-            <div className="stat-rate">
-              {stats.yearly.rate.toFixed(0)}% Complete
-            </div>
-          </div>
-          <div className="stat-bar">
-            <div
-              className="stat-bar-fill"
-              style={{ width: `${stats.yearly.rate}%` }}
-            ></div>
-          </div>
-        </div>
+        <StatCard
+          title="This Year"
+          value={`${stats.yearly.completed}/${stats.yearly.total}`}
+          subtitle={`${stats.yearly.rate.toFixed(0)}% Complete`}
+          progressBar={stats.yearly.rate}
+        />
       </div>
     </div>
   );
