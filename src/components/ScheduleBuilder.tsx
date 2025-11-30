@@ -78,26 +78,30 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule, onTaskUnschedul
                     >
                       <div className="time-label">{formatLabel(hour)}</div>
                       <div className="task-slot">
-                        {(scheduledByHour[hour] || []).map((task, idx) => (
-                          <Draggable draggableId={task.id} index={idx} key={task.id}>
-                            {(dragProvided) => (
-                              <div
-                                ref={dragProvided.innerRef}
-                                {...dragProvided.draggableProps}
-                                {...dragProvided.dragHandleProps}
-                                className="scheduled-task"
-                              >
-                                <strong>{task.title}</strong>
-                                <div style={{display: 'flex', gap: 8, alignItems: 'center'}}>
-                                  <div className="task-duration">{task.estimatedMinutes} min</div>
-                                  {Math.ceil((task.estimatedMinutes || 0) / 60) > 1 && (
-                                    <div className="multi-hour">{Math.ceil((task.estimatedMinutes || 0) / 60)}h</div>
-                                  )}
+                        {(scheduledByHour[hour] || []).map((task, idx) => {
+                          const span = Math.max(1, Math.ceil((task.estimatedMinutes || 0) / 60));
+                          // approximate width across columns (span columns visually)
+                          const widthPercent = `calc(${span * 100}% + ${ (span - 1) * 12 }px)`;
+                          return (
+                            <Draggable draggableId={task.id} index={idx} key={task.id}>
+                              {(dragProvided) => (
+                                <div
+                                  ref={dragProvided.innerRef}
+                                  {...dragProvided.draggableProps}
+                                  {...dragProvided.dragHandleProps}
+                                  className="scheduled-task"
+                                  style={{ width: widthPercent, display: 'inline-block' }}
+                                >
+                                  <strong>{task.title}</strong>
+                                  <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                                    <div className="task-duration">{task.estimatedMinutes} min</div>
+                                    {span > 1 && <div className="multi-hour">{span}h</div>}
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
+                              )}
+                            </Draggable>
+                          );
+                        })}
 
                         {provided.placeholder}
                       </div>
