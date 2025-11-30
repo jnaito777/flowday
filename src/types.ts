@@ -3,11 +3,19 @@ export interface Task {
   title: string;
   description?: string;
   category?: string;
-  estimatedMinutes: number;
-  scheduledStart?: Date;
-  scheduledEnd?: Date;
+  estimatedMinutes?: number;
+  // Scheduling/time fields (some components use string timestamps)
+  date?: string; // YYYY-MM-DD
+  type?: "work" | "personal";
+  duration?: number; // in minutes
+  startTime?: string; // HH:MM
+  endTime?: string; // HH:MM
+  inProgress?: boolean;
+  timerStartedAt?: string | Date;
+  timeSpent?: number; // minutes
+  createdAt?: string | Date;
   completed: boolean;
-  completedAt?: Date;
+  completedAt?: string | Date;
 }
 
 // Database representation of a task row from Supabase
@@ -41,4 +49,13 @@ export interface DaySummary {
   actualMinutes: number;
   tasks: Task[];
   incompleteTasks?: Task[];
+}
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  workHoursStart: string; // HH:MM
+  workHoursEnd: string; // HH:MM
+  calendarSyncEnabled: boolean;
+  lastSyncDate?: string | null;
 }
