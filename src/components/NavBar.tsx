@@ -1,4 +1,4 @@
-import React from 'react'
+// Vertical sidebar navigation component
 
 type Props = {
   onNavigate?: (tab: 'dashboard' | 'schedule' | 'statistics' | 'profile') => void

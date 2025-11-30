@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTasks } from './hooks/useTasks';
 import { useAuth } from './contexts/AuthContext';
-import TaskInput from './components/TaskInput';
 import TaskList from './components/TaskList';
 import ScheduleBuilder from './components/ScheduleBuilder';
 import DaySummary from './components/DaySummary';
@@ -15,7 +14,6 @@ function App() {
   const {
     tasks,
     loading: tasksLoading,
-    addTask,
     deleteTask,
     completeTask,
     scheduleTask,

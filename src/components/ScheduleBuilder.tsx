@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Task } from '../types';
 import { addHours, startOfDay, setHours } from 'date-fns';
 import {
@@ -6,6 +5,10 @@ import {
   Droppable,
   Draggable,
   DropResult,
+  DroppableProvided,
+  DroppableStateSnapshot,
+  DraggableProvided,
+  DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
 import './ScheduleBuilder.css';
 
@@ -70,7 +73,7 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule, onTaskUnschedul
             <div className="time-grid">
               {HOURS.map((hour) => (
                 <Droppable droppableId={`hour-${hour}`} key={hour}>
-                  {(provided, snapshot) => (
+                  {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
@@ -84,7 +87,7 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule, onTaskUnschedul
                           const widthPercent = `calc(${span * 100}% + ${ (span - 1) * 12 }px)`;
                           return (
                             <Draggable draggableId={task.id} index={idx} key={task.id}>
-                              {(dragProvided) => (
+                              {(dragProvided: DraggableProvided, dragSnapshot: DraggableStateSnapshot) => (
                                 <div
                                   ref={dragProvided.innerRef}
                                   {...dragProvided.draggableProps}
@@ -115,14 +118,14 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule, onTaskUnschedul
           <div className="unscheduled-panel">
             <h3>Unscheduled Tasks ({unscheduledTasks.length})</h3>
             <Droppable droppableId="unscheduled">
-              {(provided) => (
+              {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
                 <div ref={provided.innerRef} {...provided.droppableProps} className="unscheduled-list">
                   {unscheduledTasks.length === 0 ? (
                     <p className="empty-state">All tasks are scheduled or completed!</p>
                   ) : (
                     unscheduledTasks.map((task, idx) => (
                       <Draggable draggableId={task.id} index={idx} key={task.id}>
-                        {(dragProvided) => (
+                        {(dragProvided: DraggableProvided, dragSnapshot: DraggableStateSnapshot) => (
                           <div
                             ref={dragProvided.innerRef}
                             {...dragProvided.draggableProps}

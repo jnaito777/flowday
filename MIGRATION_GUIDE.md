@@ -6,8 +6,8 @@ The Supabase `tasks` table is missing the following columns that the app expects
 - `category` (TEXT, optional)
 
 ## Status
-✅ App UI is ready and running  
-❌ Database schema needs updating
+✅ App UI is ready and running (vertical nav with dashboard, schedule, statistics, profile)  
+❌ Database schema needs updating for full feature support
 
 ## Solution
 
