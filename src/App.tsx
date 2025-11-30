@@ -18,6 +18,7 @@ function App() {
     deleteTask,
     completeTask,
     scheduleTask,
+    unscheduleTask,
   } = useTasks();
 
   const [activeTab, setActiveTab] = useState<'tasks' | 'schedule' | 'summary'>(
@@ -100,6 +101,7 @@ function App() {
                 <ScheduleBuilder
                   tasks={tasks}
                   onTaskSchedule={handleScheduleTask}
+                  onTaskUnschedule={(taskId: string) => unscheduleTask(taskId)}
                 />
               )}
 

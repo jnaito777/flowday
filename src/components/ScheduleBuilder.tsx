@@ -12,11 +12,12 @@ import './ScheduleBuilder.css';
 interface ScheduleBuilderProps {
   tasks: Task[];
   onTaskSchedule: (taskId: string, startTime: Date, endTime: Date) => void;
+  onTaskUnschedule?: (taskId: string) => void;
 }
 
 const HOURS = Array.from({ length: 8 }, (_, i) => 9 + i); // 9..16 (9AM-4PM inclusive) visually up to 5PM
 
-export default function ScheduleBuilder({ tasks, onTaskSchedule }: ScheduleBuilderProps) {
+export default function ScheduleBuilder({ tasks, onTaskSchedule, onTaskUnschedule }: ScheduleBuilderProps) {
   const unscheduledTasks = tasks.filter((t) => !t.scheduledStart && !t.completed);
 
   // Map scheduled tasks by hour for rendering
@@ -50,6 +51,12 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule }: ScheduleBuild
 
       onTaskSchedule(task.id, startTime, endTime);
     }
+    // If dropped back to unscheduled list, call unschedule if provided
+    if (destination.droppableId === 'unscheduled') {
+      const task = tasks.find((t) => t.id === draggableId);
+      if (!task) return;
+      if (onTaskUnschedule) onTaskUnschedule(task.id);
+    }
   };
 
   const formatLabel = (hour: number) => (hour === 12 ? '12 PM' : hour < 12 ? `${hour} AM` : `${hour - 12} PM`);
@@ -81,7 +88,12 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule }: ScheduleBuild
                                 className="scheduled-task"
                               >
                                 <strong>{task.title}</strong>
-                                <div className="task-duration">{task.estimatedMinutes} min</div>
+                                <div style={{display: 'flex', gap: 8, alignItems: 'center'}}>
+                                  <div className="task-duration">{task.estimatedMinutes} min</div>
+                                  {Math.ceil((task.estimatedMinutes || 0) / 60) > 1 && (
+                                    <div className="multi-hour">{Math.ceil((task.estimatedMinutes || 0) / 60)}h</div>
+                                  )}
+                                </div>
                               </div>
                             )}
                           </Draggable>
