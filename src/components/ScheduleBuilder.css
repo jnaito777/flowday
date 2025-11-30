@@ -109,6 +109,8 @@
   border-radius: var(--radius);
   padding: 1rem;
 
+}
+
 .unscheduled-list {
   display: flex;
   flex-direction: column;
