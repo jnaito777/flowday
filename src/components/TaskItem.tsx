@@ -7,6 +7,11 @@ interface TaskItemProps {
 }
 
 export function TaskItem({ task, onComplete, onDelete }: TaskItemProps) {
+  const categoryColor = 
+    task.category === 'work' ? '#667eea' :
+    task.category === 'personal' ? '#764ba2' :
+    '#999';
+
   return (
     <div className={`task-item ${task.completed ? 'completed' : ''}`}>
       <div className="task-content">
@@ -17,7 +22,20 @@ export function TaskItem({ task, onComplete, onDelete }: TaskItemProps) {
           className="task-checkbox"
         />
         <div className="task-info">
-          <span className="task-title">{task.title}</span>
+          <div className="task-header">
+            <span className="task-title">{task.title}</span>
+            {task.category && (
+              <span 
+                className="task-category"
+                style={{ backgroundColor: categoryColor }}
+              >
+                {task.category}
+              </span>
+            )}
+          </div>
+          {task.description && (
+            <span className="task-description">{task.description}</span>
+          )}
           <span className="task-time">{task.estimatedMinutes} min</span>
         </div>
       </div>

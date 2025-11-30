@@ -1,6 +1,8 @@
 export interface Task {
   id: string;
   title: string;
+  description?: string;
+  category?: string;
   estimatedMinutes: number;
   scheduledStart?: Date;
   scheduledEnd?: Date;
@@ -13,6 +15,8 @@ export interface DBTask {
   id: string;
   user_id: string;
   title: string;
+  description?: string;
+  category?: string;
   estimated_minutes: number | null;
   scheduled_start: string | null;
   scheduled_end: string | null;

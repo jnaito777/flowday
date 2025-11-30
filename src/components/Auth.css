@@ -97,49 +97,43 @@
   cursor: not-allowed;
 }
 
-.auth-error {
+.error-message {
   padding: 0.75rem;
-  background: #fee;
-  color: #c33;
+  background: #fef2f2;
+  color: #dc2626;
   border-radius: 0.5rem;
   font-size: 0.9rem;
-  border-left: 4px solid #c33;
+  border-left: 4px solid #dc2626;
 }
 
-.auth-toggle {
+.auth-switch {
   text-align: center;
   color: #666;
   font-size: 0.9rem;
   margin-top: 1rem;
 }
 
-.auth-toggle button {
+.auth-switch p {
+  margin: 0;
+}
+
+.switch-link {
   background: none;
   border: none;
   color: #667eea;
   cursor: pointer;
   font-weight: 600;
   text-decoration: underline;
+  transition: color 0.3s;
 }
 
-.auth-toggle button:hover {
+.switch-link:hover:not(:disabled) {
   color: #764ba2;
 }
 
-.logout-button {
-  padding: 0.5rem 1rem;
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: background 0.3s;
-}
-
-.logout-button:hover {
-  background: #dc2626;
+.switch-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media (max-width: 640px) {

@@ -57,6 +57,8 @@ export function useTasks() {
       const formattedTasks: Task[] = (data || []).map((task: DBTask) => ({
         id: task.id,
         title: task.title,
+        description: task.description,
+        category: task.category,
         estimatedMinutes: task.estimated_minutes ?? 0,
         scheduledStart: task.scheduled_start ? new Date(task.scheduled_start) : undefined,
         scheduledEnd: task.scheduled_end ? new Date(task.scheduled_end) : undefined,
@@ -73,7 +75,7 @@ export function useTasks() {
   };
 
   const addTask = useCallback(
-    async (title: string, estimatedMinutes: number) => {
+    async (title: string, estimatedMinutes: number, category?: string, description?: string) => {
       if (!user) return;
 
       try {
@@ -82,6 +84,8 @@ export function useTasks() {
           .insert({
             user_id: user.id,
             title,
+            description: description || null,
+            category: category || null,
             estimated_minutes: estimatedMinutes,
             completed: false,
           })
@@ -93,6 +97,8 @@ export function useTasks() {
         const newTask: Task = {
           id: (data as DBTask).id,
           title: (data as DBTask).title,
+          description: (data as DBTask).description,
+          category: (data as DBTask).category,
           estimatedMinutes: (data as DBTask).estimated_minutes ?? 0,
           completed: false,
         };
@@ -114,6 +120,8 @@ export function useTasks() {
       try {
         const dbUpdates: Record<string, unknown> = {};
         if (updates.title !== undefined) dbUpdates.title = updates.title;
+        if (updates.description !== undefined) dbUpdates.description = updates.description;
+        if (updates.category !== undefined) dbUpdates.category = updates.category;
         if (updates.estimatedMinutes !== undefined)
           dbUpdates.estimated_minutes = updates.estimatedMinutes;
         if (updates.completed !== undefined) dbUpdates.completed = updates.completed;
