@@ -7,6 +7,7 @@ import ScheduleBuilder from './components/ScheduleBuilder';
 import DaySummary from './components/DaySummary';
 import UsageStats from './components/UsageStats';
 import Auth from './components/Auth';
+import NavBar from './components/NavBar';
 import './App.css';
 
 function App() {
@@ -45,39 +46,7 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <div className="header-content">
-      <div>
-            <h1 className="app-title">FlowDay</h1>
-            <p className="app-subtitle">Your daily productivity companion</p>
-          </div>
-          <button onClick={signOut} className="sign-out-btn">
-            Sign Out
-          </button>
-      </div>
-      </header>
-
-      <nav className="app-nav">
-        <button
-          className={`nav-btn ${activeTab === 'tasks' ? 'active' : ''}`}
-          onClick={() => setActiveTab('tasks')}
-        >
-          Tasks
-        </button>
-        <button
-          className={`nav-btn ${activeTab === 'schedule' ? 'active' : ''}`}
-          onClick={() => setActiveTab('schedule')}
-        >
-          Schedule
-        </button>
-        <button
-          className={`nav-btn ${activeTab === 'summary' ? 'active' : ''}`}
-          onClick={() => setActiveTab('summary')}
-        >
-          Summary
-        </button>
-      </nav>
-
+      <NavBar activeTab={activeTab} onChange={setActiveTab} onSignOut={signOut} />
       <main className="app-main">
         <div className="app-container">
           {tasksLoading ? (
