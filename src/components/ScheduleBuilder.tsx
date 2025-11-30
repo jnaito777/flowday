@@ -8,7 +8,6 @@ import {
   type DroppableProvided,
   type DroppableStateSnapshot,
   type DraggableProvided,
-  type DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
 import './ScheduleBuilder.css';
 
