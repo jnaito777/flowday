@@ -7,8 +7,8 @@ interface TaskItemProps {
 }
 
 export function TaskItem({ task, onComplete, onDelete }: TaskItemProps) {
-  const categoryColor = 
-    task.category === 'work' ? '#667eea' :
+  const categoryColor =
+    task.category === 'work' ? 'var(--primary)' :
     task.category === 'personal' ? '#764ba2' :
     '#999';
 

@@ -93,7 +93,7 @@
 .task-category {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: #667eea;
+  background: var(--primary);
   color: white;
   border-radius: 0.25rem;
   font-size: 0.75rem;
@@ -116,8 +116,8 @@
 
 .task-scheduled {
   padding: 0.5rem 0.75rem;
-  background: #e0e7ff;
-  color: #667eea;
+  background: rgba(102,126,234,0.08);
+  color: var(--primary);
   border-radius: 0.4rem;
   font-size: 0.9rem;
   font-weight: 600;
