@@ -3,15 +3,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
   padding: 1rem;
 }
 
 .auth-card {
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  padding: 2.5rem;
+  background: var(--card);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.12);
+  padding: 2rem;
   width: 100%;
   max-width: 400px;
   animation: slideUp 0.5s ease-out;
@@ -31,7 +31,7 @@
 .auth-card h1 {
   margin: 0 0 0.5rem;
   font-size: 1.75rem;
-  color: #1a1a1a;
+  color: var(--card-foreground);
   font-weight: 700;
 }
 
@@ -61,22 +61,23 @@
 
 .form-group input {
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: border-color 0.3s;
   font-family: inherit;
+  background: var(--input-background);
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
 }
 
 .auth-button {
   padding: 0.75rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -89,7 +90,7 @@
 
 .auth-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.18);
 }
 
 .auth-button:disabled {
@@ -120,7 +121,7 @@
 .switch-link {
   background: none;
   border: none;
-  color: #667eea;
+  color: var(--primary);
   cursor: pointer;
   font-weight: 600;
   text-decoration: underline;

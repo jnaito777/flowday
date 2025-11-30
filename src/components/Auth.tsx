@@ -76,6 +76,7 @@ export default function Auth() {
               className="form-input"
               disabled={loading}
               aria-label="Email address"
+              autoFocus
             />
           </div>
 
@@ -95,7 +96,11 @@ export default function Auth() {
             />
           </div>
 
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="error-message" role="alert" aria-live="assertive">
+              {error}
+            </div>
+          )}
 
           <button
             type="submit"
