@@ -4,11 +4,11 @@ import {
   DragDropContext,
   Droppable,
   Draggable,
-  DropResult,
-  DroppableProvided,
-  DroppableStateSnapshot,
-  DraggableProvided,
-  DraggableStateSnapshot,
+  type DropResult,
+  type DroppableProvided,
+  type DroppableStateSnapshot,
+  type DraggableProvided,
+  type DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
 import './ScheduleBuilder.css';
 
@@ -87,7 +87,7 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule, onTaskUnschedul
                           const widthPercent = `calc(${span * 100}% + ${ (span - 1) * 12 }px)`;
                           return (
                             <Draggable draggableId={task.id} index={idx} key={task.id}>
-                              {(dragProvided: DraggableProvided, dragSnapshot: DraggableStateSnapshot) => (
+                              {(dragProvided: DraggableProvided) => (
                                 <div
                                   ref={dragProvided.innerRef}
                                   {...dragProvided.draggableProps}
@@ -118,14 +118,14 @@ export default function ScheduleBuilder({ tasks, onTaskSchedule, onTaskUnschedul
           <div className="unscheduled-panel">
             <h3>Unscheduled Tasks ({unscheduledTasks.length})</h3>
             <Droppable droppableId="unscheduled">
-              {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+              {(provided: DroppableProvided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps} className="unscheduled-list">
                   {unscheduledTasks.length === 0 ? (
                     <p className="empty-state">All tasks are scheduled or completed!</p>
                   ) : (
                     unscheduledTasks.map((task, idx) => (
                       <Draggable draggableId={task.id} index={idx} key={task.id}>
-                        {(dragProvided: DraggableProvided, dragSnapshot: DraggableStateSnapshot) => (
+                        {(dragProvided: DraggableProvided) => (
                           <div
                             ref={dragProvided.innerRef}
                             {...dragProvided.draggableProps}
