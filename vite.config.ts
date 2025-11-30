@@ -52,6 +52,20 @@
     build: {
       target: 'esnext',
       outDir: 'dist',
+      chunkSizeWarningLimit: 700,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) return 'vendor_react';
+              if (id.includes('recharts')) return 'vendor_recharts';
+              if (id.includes('lucide-react')) return 'vendor_icons';
+              if (id.includes('react-beautiful-dnd')) return 'vendor_dnd';
+              return 'vendor_misc';
+            }
+          },
+        },
+      },
     },
     server: {
       port: 3000,
