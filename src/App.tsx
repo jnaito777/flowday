@@ -46,7 +46,8 @@ function App() {
 
   return (
     <div className="app">
-      <NavBar activeTab={activeTab} onChange={setActiveTab} onSignOut={signOut} />
+      <NavBar onNavigate={setActiveTab} onSignOut={signOut} />
+
       <main className="app-main">
         <div className="app-container">
           {tasksLoading ? (
