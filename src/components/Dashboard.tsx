@@ -235,30 +235,6 @@ export function Dashboard() {
     setEditingTaskId(null);
   };
 
-  const editTask = (taskId: string) => {
-    setEditingTaskId(taskId);
-  };
-
-  const saveTask = (
-    taskId: string,
-    newTitle: string,
-    newType: "work" | "personal",
-  ) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === taskId) {
-        return {
-          ...task,
-          title: newTitle.trim(),
-          type: newType,
-        };
-      }
-      return task;
-    });
-    storage.saveTasks(updatedTasks);
-    setTasks(updatedTasks);
-    setEditingTaskId(null);
-  };
-
   return (
     <div className="p-8">
       <div className="max-w-6xl mx-auto">

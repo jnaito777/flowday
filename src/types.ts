@@ -4,18 +4,20 @@ export interface Task {
   description?: string;
   category?: string;
   estimatedMinutes?: number;
-  // Scheduling/time fields (some components use string timestamps)
-  date?: string; // YYYY-MM-DD
+  // Scheduling/time fields (string ISO or specific formats)
+  date: string; // YYYY-MM-DD (required for many components)
   type?: "work" | "personal";
   duration?: number; // in minutes
   startTime?: string; // HH:MM
   endTime?: string; // HH:MM
   inProgress?: boolean;
-  timerStartedAt?: string | Date;
+  timerStartedAt?: string; // ISO timestamp
   timeSpent?: number; // minutes
-  createdAt?: string | Date;
+  createdAt?: string; // ISO timestamp
   completed: boolean;
-  completedAt?: string | Date;
+  completedAt?: string; // ISO timestamp
+  scheduledStart?: string; // ISO timestamp
+  scheduledEnd?: string; // ISO timestamp
 }
 
 // Database representation of a task row from Supabase

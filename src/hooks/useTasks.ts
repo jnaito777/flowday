@@ -53,17 +53,19 @@ export function useTasks() {
 
       if (error) throw error;
 
-      // Convert database format to Task format
+      // Convert database format to Task format (keep ISO strings)
       const formattedTasks: Task[] = (data || []).map((task: DBTask) => ({
         id: task.id,
         title: task.title,
         description: task.description,
         category: task.category,
         estimatedMinutes: task.estimated_minutes ?? 0,
-        scheduledStart: task.scheduled_start ? new Date(task.scheduled_start) : undefined,
-        scheduledEnd: task.scheduled_end ? new Date(task.scheduled_end) : undefined,
+        scheduledStart: task.scheduled_start ?? undefined,
+        scheduledEnd: task.scheduled_end ?? undefined,
         completed: task.completed,
-        completedAt: task.completed_at ? new Date(task.completed_at) : undefined,
+        completedAt: task.completed_at ?? undefined,
+        createdAt: task.created_at ?? undefined,
+        date: task.scheduled_start ? task.scheduled_start.split('T')[0] : (task.created_at ? task.created_at.split('T')[0] : new Date().toISOString().split('T')[0]),
       }));
 
       setTasks(formattedTasks);
@@ -126,11 +128,11 @@ export function useTasks() {
           dbUpdates.estimated_minutes = updates.estimatedMinutes;
         if (updates.completed !== undefined) dbUpdates.completed = updates.completed;
         if (updates.scheduledStart !== undefined)
-          dbUpdates.scheduled_start = updates.scheduledStart?.toISOString();
+          dbUpdates.scheduled_start = typeof updates.scheduledStart === 'string' ? updates.scheduledStart : (updates.scheduledStart instanceof Date ? updates.scheduledStart.toISOString() : undefined);
         if (updates.scheduledEnd !== undefined)
-          dbUpdates.scheduled_end = updates.scheduledEnd?.toISOString();
+          dbUpdates.scheduled_end = typeof updates.scheduledEnd === 'string' ? updates.scheduledEnd : (updates.scheduledEnd instanceof Date ? updates.scheduledEnd.toISOString() : undefined);
         if (updates.completedAt !== undefined)
-          dbUpdates.completed_at = updates.completedAt?.toISOString();
+          dbUpdates.completed_at = typeof updates.completedAt === 'string' ? updates.completedAt : (updates.completedAt instanceof Date ? updates.completedAt.toISOString() : undefined);
 
         const { error } = await supabase
           .from('tasks')
