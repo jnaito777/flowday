@@ -442,13 +442,11 @@ export function Dashboard() {
                 .sort((a, b) => {
                   // Sort by start time, then by creation time
                   if (a.startTime && b.startTime) {
-                    return a.startTime.localeCompare(
-                      b.startTime,
-                    );
+                    return a.startTime.localeCompare(b.startTime);
                   }
                   if (a.startTime) return -1;
                   if (b.startTime) return 1;
-                  return a.createdAt.localeCompare(b.createdAt);
+                  return (a.createdAt || '').localeCompare(b.createdAt || '');
                 })
                 .map((task) => {
                   const elapsed = getElapsedTime(task);

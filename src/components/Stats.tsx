@@ -98,7 +98,7 @@ export function Stats() {
   // Overall stats
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(t => t.completed).length;
-  const overallCompletionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  const _overallCompletionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
   const avgCompletionRate = chartData.length > 0 
     ? Math.round(chartData.reduce((sum, d) => sum + d.rate, 0) / chartData.length) 
     : 0;

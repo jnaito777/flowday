@@ -96,13 +96,14 @@ export function useTasks() {
 
         if (error) throw error;
 
-        const newTask: Task = {
+          const newTask: Task = {
           id: (data as DBTask).id,
           title: (data as DBTask).title,
           description: (data as DBTask).description,
           category: (data as DBTask).category,
           estimatedMinutes: (data as DBTask).estimated_minutes ?? 0,
-          completed: false,
+            completed: false,
+            date: new Date().toISOString().split('T')[0],
         };
 
         setTasks((prev) => [newTask, ...prev]);
@@ -127,12 +128,18 @@ export function useTasks() {
         if (updates.estimatedMinutes !== undefined)
           dbUpdates.estimated_minutes = updates.estimatedMinutes;
         if (updates.completed !== undefined) dbUpdates.completed = updates.completed;
-        if (updates.scheduledStart !== undefined)
-          dbUpdates.scheduled_start = typeof updates.scheduledStart === 'string' ? updates.scheduledStart : (updates.scheduledStart instanceof Date ? updates.scheduledStart.toISOString() : undefined);
-        if (updates.scheduledEnd !== undefined)
-          dbUpdates.scheduled_end = typeof updates.scheduledEnd === 'string' ? updates.scheduledEnd : (updates.scheduledEnd instanceof Date ? updates.scheduledEnd.toISOString() : undefined);
-        if (updates.completedAt !== undefined)
-          dbUpdates.completed_at = typeof updates.completedAt === 'string' ? updates.completedAt : (updates.completedAt instanceof Date ? updates.completedAt.toISOString() : undefined);
+        if (updates.scheduledStart !== undefined) {
+          if (typeof updates.scheduledStart === 'string') dbUpdates.scheduled_start = updates.scheduledStart;
+          else dbUpdates.scheduled_start = (updates.scheduledStart as any)?.toISOString?.();
+        }
+        if (updates.scheduledEnd !== undefined) {
+          if (typeof updates.scheduledEnd === 'string') dbUpdates.scheduled_end = updates.scheduledEnd;
+          else dbUpdates.scheduled_end = (updates.scheduledEnd as any)?.toISOString?.();
+        }
+        if (updates.completedAt !== undefined) {
+          if (typeof updates.completedAt === 'string') dbUpdates.completed_at = updates.completedAt;
+          else dbUpdates.completed_at = (updates.completedAt as any)?.toISOString?.();
+        }
 
         const { error } = await supabase
           .from('tasks')
@@ -180,7 +187,7 @@ export function useTasks() {
       if (!user) return;
 
       try {
-        await updateTask(id, { completed: true, completedAt: new Date() });
+        await updateTask(id, { completed: true, completedAt: new Date().toISOString() });
 
         // Record an analytic event for completion
         const { error: eventError } = await supabase.from('task_events').insert({
@@ -201,7 +208,7 @@ export function useTasks() {
 
   const scheduleTask = useCallback(
     async (id: string, start: Date, end: Date) => {
-      await updateTask(id, { scheduledStart: start, scheduledEnd: end });
+      await updateTask(id, { scheduledStart: start.toISOString(), scheduledEnd: end.toISOString() });
     },
     [updateTask]
   );

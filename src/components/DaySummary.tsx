@@ -31,7 +31,7 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
 
     const completedTasks = todayTasks.filter((t) => t.completed);
     const totalEstimated = completedTasks.reduce(
-      (sum, task) => sum + task.estimatedMinutes,
+      (sum, task) => sum + (task.estimatedMinutes || 0),
       0
     );
 
@@ -43,7 +43,7 @@ export default function DaySummary({ tasks }: DaySummaryProps) {
         const diff = (end.getTime() - start.getTime()) / (1000 * 60);
         return sum + Math.max(0, diff);
       }
-      return sum + task.estimatedMinutes;
+      return sum + (task.estimatedMinutes || 0);
     }, 0);
 
     return {

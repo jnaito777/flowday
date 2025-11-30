@@ -48,7 +48,7 @@ export function TimelineView({ tasks, date }: TimelineViewProps) {
       <div className="p-6">
         <div className="relative">
           {/* Hour labels and grid */}
-          {hours.map((hour, index) => (
+          {hours.map((hour) => (
             <div key={hour} className="relative" style={{ height: '80px' }}>
               <div className="absolute left-0 top-0 text-gray-600 w-16">
                 {`${hour % 12 || 12}:00 ${hour < 12 ? 'AM' : 'PM'}`}
